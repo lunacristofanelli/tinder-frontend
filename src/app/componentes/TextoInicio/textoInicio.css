@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+
+.containerText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    padding: 0 1rem;
+    gap: 1.2rem;
+
+    h1 {
+        text-align: center;
+        font-family: "Lilita One", sans-serif;
+    }
+
+    h2 {
+        font-size: 22px;
+        font-style: oblique;
+    }
+}
