@@ -1,11 +1,14 @@
 import './btnIniciarSesion.css';
+import Link from 'next/link';
 
 export const IniciarSesion = () => {
   return (
     <div>
-      <button className='btn'> Iniciar sesión  </button>
+      <Link href='/form'>
+        <button className='btn'>
+          Iniciar Sesion
+        </button>
+      </Link>
     </div>
-  ) 
+  );
 }
-
-export default IniciarSesion;

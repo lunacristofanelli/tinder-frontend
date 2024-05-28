@@ -1,9 +1,20 @@
 import axios from 'axios';
 
-const clienteAxios = axios.create({
-  baseURL: 'http://localhost:8080/',
-});
+const createCliente = () => {
+  const token = localStorage.getItem("accessToken");
+  const cliente = axios.create({
+    baseURL: 'http://localhost:8080/',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  });
+  return cliente;
+}
 
+const clienteAxios = createCliente();
+
+export default clienteAxios;
+/*
 clienteAxios.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -11,8 +22,7 @@ clienteAxios.interceptors.response.use(
       return Promise.reject('axios.errors.network');
     }
     const { status } = error.response;
-
-    if (status === 400) {
+if (status === 400) {
       if (error.response.data.errors) {
         return Promise.reject(error.response.data.errors[0].msg);
       }
@@ -30,5 +40,4 @@ clienteAxios.interceptors.response.use(
     return null;
   }
 );
-
-export default clienteAxios;
+*/

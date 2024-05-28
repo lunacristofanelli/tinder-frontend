@@ -1,0 +1,21 @@
+header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4.5rem;
+}
+
+body {
+    height: 100vh;
+    box-sizing: border-box;
+    background-color: rgb(42, 21, 16);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
