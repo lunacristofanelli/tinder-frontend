@@ -2,10 +2,8 @@
 import React from "react";
 import { Logo } from "@/app/componentes/Logo/logo";
 import { Footer } from "@/app/componentes/Footer/footer";
-import "./page.css";
-import { Form } from "@/app/componentes/form/formInicio";
 
-export default function FormHome() {
+export default function AdminPage() {
   return (
     <>
       <body>
@@ -14,7 +12,7 @@ export default function FormHome() {
         </header>
 
         <main> 
-            <Form></Form>
+            <h2>hola administrador</h2>
         </main>
           <Footer></Footer>
       </body>

@@ -1,19 +1,24 @@
+"use client"
 import axios from 'axios';
 
 const createCliente = () => {
-  const token = localStorage.getItem("accessToken");
   const cliente = axios.create({
     baseURL: 'http://localhost:8080/',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    }
   });
   return cliente;
 }
 
 const clienteAxios = createCliente();
+clienteAxios.interceptors.request.use((request) => {
+  if (localStorage.getItem("accessToken")) {
+    request.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}`;
+  }
+  return request;
+})
 
 export default clienteAxios;
+
+
 /*
 clienteAxios.interceptors.response.use(
   (response) => response,
