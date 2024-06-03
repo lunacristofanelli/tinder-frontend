@@ -1,0 +1,22 @@
+header{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 2rem 4.5rem;
+}
+
+body{
+     height: 100vh;
+     box-sizing: border-box;
+     background-color: rgb(42, 21, 16);
+} 
+
+main{
+    margin-top: 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

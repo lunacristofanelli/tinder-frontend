@@ -1,0 +1,19 @@
+.sidebar {
+    background-color: rgb(42, 21, 16);
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .sidebarItem {
+    display: flex;
+    gap: 8px;
+    color: white;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebarItem:hover {
+    background-color: #e04e56;
+  }
+  

@@ -1,17 +1,46 @@
-"use client"
+'use client';
 
+import { UserContext } from "@/app/context/user.context";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import Sidebar from '@/app/componentes/sidebar/sidebar';
+import './page.css';
 
 export default function Layout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <>
-            <header className="header">
-                <h1>hola usuario</h1>
-            </header>
-            {children}
-        </>
-    );
+  const { userData, setUserData } = useContext(UserContext);
+  const router = useRouter();
+
+  const logout = (): void => {
+    localStorage.removeItem("accessToken");
+    setUserData(undefined);
+    router.push("/");
+  };
+
+  const goToProfile = (): void => {
+    router.push("/editar-perfil");
+  };
+
+  return (
+    <>
+      <header className="header">
+        <div className="user-info">
+          <span>{userData?.email}</span>
+          <Sidebar
+            numMatches={10} 
+            numMensajes={5}
+            onEditarPerfil={goToProfile} 
+          />
+          
+          <button className="btn btn-logout" onClick={logout}>Cerrar Sesión</button>
+        </div>
+      </header>
+      <div className="content">
+        {children}
+      </div>
+    </>
+  );
 }
