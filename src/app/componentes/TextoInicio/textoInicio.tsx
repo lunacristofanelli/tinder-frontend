@@ -6,7 +6,7 @@ export const TextoInicio = () => {
     <div className='containerText'>
       <h1>Tu próxima cita está a un clic de distancia.</h1>
 
-      <h2>Descubre Tinder y conocé a tu crush</h2>
+      <h2>Descubre Wish y conocé a tu crush</h2>
     </div>
   )
 }
