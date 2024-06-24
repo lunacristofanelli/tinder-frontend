@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .pageContainer {
   display: flex;
   justify-content: center;
@@ -206,3 +207,17 @@ body {
     padding: 1rem; /* Reduce el padding en pantallas más pequeñas */
   }
 }
+=======
+.containerUsuarios{
+    height: 10px;
+}
+
+.containerImg{
+    color: aliceblue;
+}
+
+.imgCard{
+    color: aliceblue;
+}
+
+>>>>>>> a63418c14e1fd3d3950499a72befd1a4a86e6053

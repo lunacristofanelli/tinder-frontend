@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import CardUsuarios from '@/app/componentes/cardUsuarios/cardUsuarios';
 import Usuarios from "@/app/model/usuariosRegistrados/usuarios";
@@ -147,3 +148,26 @@ const App: React.FC = () => {
 };
 
 export default App;
+=======
+"use client"
+import React from "react";
+import { Logo } from "@/app/componentes/Logo/logo";
+import { Footer } from "@/app/componentes/Footer/footer";
+
+export default function AdminPage() {
+  return (
+    <>
+      <body>
+        <header>
+            <Logo></Logo>
+        </header>
+
+        <main> 
+            <h2>hola administrador</h2>
+        </main>
+          <Footer></Footer>
+      </body>
+    </>
+  )
+}
+>>>>>>> a63418c14e1fd3d3950499a72befd1a4a86e6053
