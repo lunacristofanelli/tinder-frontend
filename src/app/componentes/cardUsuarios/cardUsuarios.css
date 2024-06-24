@@ -1,0 +1,223 @@
+<<<<<<< HEAD
+.pageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la pantalla */
+  padding: 1rem; /* Añade un pequeño padding para evitar que las cards toquen los bordes de la pantalla */
+}
+
+.cardsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(42, 21, 16);
+  padding: 1rem;
+  max-width: 800px; /* Ajusta el ancho máximo */
+  width: 100%;
+  box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+}
+
+.cardUsuarios {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: rgb(42, 21, 16);
+  padding: 1.5rem;
+  max-width: 600px; /* Ajusta el ancho máximo */
+  width: 100%; /* Asegura que ocupe el ancho disponible */
+  box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+}
+
+.card {
+  position: relative;
+  background-color: rgb(42, 21, 16);
+  max-width: 300px;
+  width: 100%; /* Ajusta el ancho para ser responsivo */
+  margin-bottom: 1.5rem;
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.cardUsuarios:hover {
+  transform: scale(1.05);
+}
+
+.containerImgCards {
+  position: relative;
+  overflow: hidden;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.imgCard {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.infoOverlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.infoOverlay p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.btnMostrarIntereses {
+  display: block;
+  width: calc(100% - 2rem);
+  margin: 1rem auto; /* Centra el botón horizontalmente */
+  padding: 8px 16px;
+  background-color: #fc7f87 !important; /* Fuerza el color de fondo */
+  color: white !important; /* Fuerza el color del texto */
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btnMostrarIntereses:hover {
+  background-color: #e04e56 !important; /* Fuerza el color de fondo en el hover */
+}
+
+.divIntereses {
+  padding: 1rem;
+  background-color: transparent; 
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.divIntereses p {
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  background-color: #fc7f87;
+  color: white;
+  border-radius: 10px;
+  font-size: 0.8rem;
+}
+
+.perfil-imagen {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: white;
+}
+
+header .user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: rgb(42, 21, 16);
+}
+
+.btn-logout:not(:disabled) {
+  border: none;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-logout:not(:disabled):hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: black;
+}
+
+/* Estilos específicos para los botones de acción */
+.accion-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #fc7f87 !important; /* Fuerza el color de fondo */
+  color: white !important; /* Fuerza el color del texto */
+  border: none;
+  border-radius: 50%;
+  margin: 0.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.accion-btn:hover {
+  background-color: #c53945 !important; /* Fuerza el color de fondo en el hover */
+}
+
+.containerBtnAcciones {
+  display: flex;
+  justify-content: center; /* Centra los botones horizontalmente */
+  margin-top: 1rem;
+}
+
+/* Ocultar la barra de navegación del Carousel */
+.carousel-control-prev,
+.carousel-control-next {
+  width: auto; /* Ajusta el tamaño de las flechas */
+  opacity: 1; /* Ajusta la opacidad */
+}
+
+.carousel-indicators {
+  display: none; /* Oculta los indicadores de las diapositivas */
+}
+
+/* Media queries para mejorar la responsividad */
+@media (max-width: 768px) {
+  .card {
+    max-width: 90%; /* Ajusta el ancho para pantallas más pequeñas */
+  }
+  
+  .cardsContainer {
+    padding: 1rem; /* Reduce el padding en pantallas más pequeñas */
+  }
+  
+  .cardUsuarios {
+    padding: 1rem; /* Reduce el padding en pantallas más pequeñas */
+  }
+}
+=======
+.containerUsuarios{
+    height: 10px;
+}
+
+.containerImg{
+    color: aliceblue;
+}
+
+.imgCard{
+    color: aliceblue;
+}
+
+>>>>>>> a63418c14e1fd3d3950499a72befd1a4a86e6053
