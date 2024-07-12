@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { login, signUp, getInformacionUsuario } from '@/app/services/Auth';
+import { login, signUp, getInformacionUsuario, getInformacionUsuarioByEmail } from '@/app/services/Auth';
 import { UserContext } from '@/app/context/user.context';
 import './formInicio.css';
 
@@ -13,17 +13,18 @@ export const Form = () => {
   const [showLogin, setShowLogin] = useState(false);
   const router = useRouter();
 
-  const handleLogin = async (data:any) => {
+  const handleLogin = async (data: any) => {
     try {
       const body = {
-        username: data.nombre,
+        email: data.email,
         password: data.password,
       };
       const loginExitoso = await login(body);
+      console.log(loginExitoso)
       if (loginExitoso) {
-        const userData = await getInformacionUsuario();
+        const userData = await getInformacionUsuarioByEmail(body.email);
         setUserData(userData);
-        if (userData?.role === "ADM") {
+        if (userData[0]?.codigo === "ADM") {
           router.push('/administrador');
         } else {
           router.push('/usuario');
@@ -41,6 +42,8 @@ export const Form = () => {
     try {
       const body = {
         email: data.email,
+        nombre: data.nombre,
+        apellido: data.apellido,
         password: data.password,
       };
       const registroExitoso = await signUp(body);
@@ -91,9 +94,9 @@ export const Form = () => {
       {!showLogin && <div className="loader" />}
       {showLogin && (
         <>
-      <h2>{isSignUp ? 'Registrate' : 'Inicia Sesión'}</h2>
+          <h2>{isSignUp ? 'Regístrate' : 'Inicia Sesión'}</h2>
           <form onSubmit={isSignUp ? handleSubmit(handleRegister) : handleSubmit(handleLogin)}>
-            {isSignUp && (
+            {!isSignUp && (
               <div>
                 <input type="email" placeholder="Email" {...register('email', {
                   required: true,
@@ -103,31 +106,55 @@ export const Form = () => {
                 {errors.email?.type === 'pattern' && <p>Su email es incorrecto</p>}
               </div>
             )}
-            <div>
-              <input type="text" placeholder="Username" {...register('nombre', { required: true })} />
-              {errors.nombre?.type === 'required' && <p>Ingrese su nombre de usuario</p>}
-              {errors.nombre?.type === 'maxLength' && <p>El campo debe tener menos de 12 caracteres</p>}
-            </div>
-            <div>
-              <input type="password" placeholder="Password" {...register('password', {
-                required: true,
-
-              })} />
-              {errors.password?.type === 'required' && <p>Ingrese su contraseña</p>}
-              {errors.password?.type === 'minLength' && (
-                <p>La contraseña debe tener al menos 8 caracteres</p>
-              )}
-              {errors.password?.type === 'pattern' && (
-                <p>La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número</p>
-              )}
-            </div>
+            {!isSignUp && (
+              <div>
+                <input type="password" placeholder="Password" {...register('password', {
+                  required: true,
+                })} />
+                {errors.password?.type === 'required' && <p>Ingrese su contraseña</p>}
+              </div>
+            )}
+            {isSignUp && (
+              <>
+                <div>
+                  <input type="email" placeholder="Email" {...register('email', {
+                    required: true,
+                    pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/i
+                  })} />
+                  {errors.email?.type === 'required' && <p>Ingrese su email</p>}
+                  {errors.email?.type === 'pattern' && <p>Su email es incorrecto</p>}
+                </div>
+                <div>
+                  <input type="text" placeholder="Nombre" {...register('nombre', { required: true })} />
+                  {errors.nombre?.type === 'required' && <p>Ingrese su nombre</p>}
+                </div>
+                <div>
+                  <input type="text" placeholder="Apellido" {...register('apellido', { required: true })} />
+                  {errors.apellido?.type === 'required' && <p>Ingrese su apellido</p>}
+                </div>
+                <div>
+                  <input type="password" placeholder="Password" {...register('password', {
+                    required: true,
+                    minLength: 8,
+                    pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+                  })} />
+                  {errors.password?.type === 'required' && <p>Ingrese su contraseña</p>}
+                  {errors.password?.type === 'minLength' && (
+                    <p>La contraseña debe tener al menos 8 caracteres</p>
+                  )}
+                  {errors.password?.type === 'pattern' && (
+                    <p>La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número</p>
+                  )}
+                </div>
+              </>
+            )}
             <div className='containerBtn'>
-          <input className='submit' type="submit" value={isSignUp ? 'Registrate' : 'Inicia Sesión'} />
-          {!isSignUp && <button type="button" onClick={toggleForm}>¿No tienes cuenta? Regístrate aquí.</button>}
-          {isSignUp && <button type="button" onClick={toggleForm}>¿Ya tienes una cuenta? Inicia sesión aquí.</button>}
-          {submitError && <p className="submitError">{submitError}</p>}
-        </div>
-      </form>
+              <input className='submit' type="submit" value={isSignUp ? 'Regístrate' : 'Inicia Sesión'} />
+              {!isSignUp && <button type="button" onClick={toggleForm}>¿No tienes cuenta? Regístrate aquí.</button>}
+              {isSignUp && <button type="button" onClick={toggleForm}>¿Ya tienes una cuenta? Inicia sesión aquí.</button>}
+              {submitError && <p className="submitError">{submitError}</p>}
+            </div>
+          </form>
         </>
       )}
     </div>

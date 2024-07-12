@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { UserContextProvider } from "./context/user.context";
 
 
 export default function Home() {
@@ -10,6 +11,8 @@ export default function Home() {
   }, []);
 
   return (
-   <></>
+    <UserContextProvider>
+      <></>
+    </UserContextProvider>
   );
 }

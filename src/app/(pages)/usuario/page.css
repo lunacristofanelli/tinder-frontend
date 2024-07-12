@@ -1,6 +1,7 @@
 header{
     display: flex;
     flex-direction: row;
+    position: absolute; top: 0; right:0;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: flex-end;
@@ -20,3 +21,14 @@ main{
     justify-content: center;
     align-items: center;
 }
+
+.btn-logout{
+    color:white;
+    background-color: transparent;
+}
+
+.btn-logout:hover{
+    color:white;
+    background-color: transparent;
+}
+
