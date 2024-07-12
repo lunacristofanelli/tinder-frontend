@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Usuarios from "@/app/model/usuariosRegistrados/usuarios";
+import Usuarios from "../../model/usuariosRegistrados/usuarios";
 import "./cardUsuarios.css";
 import Carousel from 'react-bootstrap/Carousel';
+import { deleteMatch, superLike } from '../interacciones/interacciones';
 
 interface CardUsuariosProps {
   datos: Usuarios[];
@@ -12,19 +13,21 @@ interface CardUsuariosProps {
 const CardUsuarios: React.FC<CardUsuariosProps> = ({ datos }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showIntereses, setShowIntereses] = useState(false);
+
   const handleLike = () => {
     console.log('Me gusta');
     nextCard();
   };
 
-  const handleSuperLike = () => {
-    console.log('Super Like');
-    nextCard();
-  };
-
-  const handleNope = () => {
-    console.log('Nope');
-    nextCard();
+  const handleNope = async (event: React.MouseEvent<HTMLButtonElement>, matchID: number) => {
+    event.preventDefault();
+    try {
+      const response = await deleteMatch(matchID);
+      console.log('Match eliminado:', response);
+      nextCard(); 
+    } catch (error) {
+      console.error('Error al eliminar el match:', error);
+    }
   };
 
   const handleRewind = () => {
@@ -58,21 +61,21 @@ const CardUsuarios: React.FC<CardUsuariosProps> = ({ datos }) => {
     <div className="pageContainer">
       <div className="cardUsuarios">
         <div className="cardsContainer">
-          {datos[currentIndex] && datos[currentIndex].imagen && (
+          {datos[currentIndex] && datos[currentIndex].imagenes && (
             <div className="containerImgCards">
               <Carousel interval={null} indicators={false} controls={true}>
-                {datos[currentIndex].imagen.map((img, index) => (
+                {datos[currentIndex].imagenes.map((img, index) => (
                   <Carousel.Item key={index}>
                     <img
                       src={img}
                       className="imgCard"
-                      alt={`${datos[currentIndex].nombreCompleto} imagen ${index + 1}`}
+                      alt={`${datos[currentIndex].nombre} imagen ${index + 1}`}
                     />
                   </Carousel.Item>
                 ))}
               </Carousel>
               <div className="infoOverlay">
-                <p>{datos[currentIndex].nombreCompleto}</p>
+                <p>{datos[currentIndex].nombre}</p>
                 <p>{datos[currentIndex].sobreMi}</p>
               </div>
             </div>
@@ -82,22 +85,18 @@ const CardUsuarios: React.FC<CardUsuariosProps> = ({ datos }) => {
           </button>
           {showIntereses && (
             <div className="divIntereses">
-              <p>{datos[currentIndex].interesesUno}</p>
-              <p>{datos[currentIndex].interesesDos}</p>
-              <p>{datos[currentIndex].interesesTres}</p>
-              <p>{datos[currentIndex].interesesCuatro}</p>
-              <p>{datos[currentIndex].interesesCinco}</p>
+              <p>{datos[currentIndex].intereses}</p>
             </div>
           )}
           <div className="containerBtnAcciones">
             <button className="accion-btn rewind-btn" onClick={handleRewind}>
               <i className="fas fa-undo"></i>
             </button>
-            <button className="accion-btn nope-btn" onClick={handleNope}>
+            <button
+              className="accion-btn nope-btn"
+              onClick={(event) => handleNope(event, datos[currentIndex].matchID)} // Pasar matchID aquí
+            >
               <i className="fas fa-times"></i>
-            </button>
-            <button className="accion-btn superlike-btn" onClick={handleSuperLike}>
-              <i className="fas fa-star"></i>
             </button>
             <button className="accion-btn like-btn" onClick={handleLike}>
               <i className="fas fa-heart"></i>

@@ -4,11 +4,10 @@ import "./sidebar.css";
 
 interface SidebarProps {
   numMatches: number;
-  numMensajes: number;
   onEditarPerfil: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ numMatches, numMensajes, onEditarPerfil }) => {
+const Sidebar: React.FC<SidebarProps> = ({ numMatches, onEditarPerfil }) => {
   return (
     <div className="sidebar">
       <div className="sidebarItem" onClick={onEditarPerfil}>
@@ -17,9 +16,7 @@ const Sidebar: React.FC<SidebarProps> = ({ numMatches, numMensajes, onEditarPerf
       <div className="sidebarItem">
         <i className="fas fa-heart"></i> Matches ({numMatches})
       </div>
-      <div className="sidebarItem">
-        <i className="fas fa-comments"></i> Mensajes ({numMensajes})
-      </div>
+
     </div>
   );
 };
