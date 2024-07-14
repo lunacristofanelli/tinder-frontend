@@ -1,0 +1,18 @@
+.nbContainer{
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.icon{
+  width: 5.50rem;
+  height:4rem;
+  font-size: 15px;
+  padding: 15px 10px;
+}

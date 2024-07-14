@@ -2,7 +2,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la pantalla */
   padding: 1rem; /* Añade un pequeño padding para evitar que las cards toquen los bordes de la pantalla */
 }
 
@@ -42,9 +41,6 @@
   transition: transform 0.3s ease;
 }
 
-.cardUsuarios:hover {
-  transform: scale(1.05);
-}
 
 .containerImgCards {
   position: relative;
@@ -116,27 +112,6 @@
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
-}
-
-header {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  color: white;
-}
-
-header .user-info {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: rgb(42, 21, 16);
 }
 
 .btn-logout:not(:disabled) {

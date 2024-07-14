@@ -13,6 +13,8 @@ export const UserContextProvider = ({ children }: { children: React.ReactNode}):
     setUserData,
   }), [userData]);
 
+  //if (localStorage.getItem('accessToken')) setUserData({email: 'asda', role: 'asd'});
+
   return (
     <UserContext.Provider value={userContextValue}>
       {children}

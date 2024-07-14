@@ -1,4 +1,5 @@
 export interface IUser {
     email: string,
-    role: string
+    role: string,
+    token: string,
   }

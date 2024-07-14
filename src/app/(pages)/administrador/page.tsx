@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import CardUsuarios from '@/app/componentes/cardUsuarios/cardUsuarios';
 import Usuarios from "@/app/model/usuariosRegistrados/usuarios";

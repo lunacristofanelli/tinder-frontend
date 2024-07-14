@@ -1,36 +1,44 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { login, signUp, getInformacionUsuario, getInformacionUsuarioByEmail } from '@/app/services/Auth';
+import {signUp, getInformacionUsuario, getInformacionUsuarioByEmail, RegisterReqBody} from '@/app/services/Auth';
 import { UserContext } from '@/app/context/user.context';
 import './formInicio.css';
+import {signIn} from "next-auth/react";
+import axios from "axios";
+import {IUser} from "@/app/model/user/IUser";
+import {uploadFile} from "@/app/services/FileUpload";
+import {Select, SelectOption} from "@/app/componentes/Select/Select";
+import {getLikeables} from "@/app/services/User";
+import {getIntereses, Interes} from "@/app/services/Interes";
 
 export const Form = () => {
   const { register, formState: { errors }, handleSubmit, reset } = useForm();
   const { setUserData } = useContext(UserContext);
   const [submitError, setSubmitError] = useState('');
+  const [files, setFiles] = useState([]);
   const [isSignUp, setIsSignUp] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  const [intereses, setIntereses] = useState<SelectOption[]>([]);
+  const [selectValue, setSelectValue] = useState<SelectOption[]>([]);
   const router = useRouter();
+
+  const onInputChange = (e) => {
+    setFiles(e.target.files);
+  };
 
   const handleLogin = async (data: any) => {
     try {
-      const body = {
+      const response = await signIn("credentials", {
         email: data.email,
         password: data.password,
-      };
-      const loginExitoso = await login(body);
-      console.log(loginExitoso)
-      if (loginExitoso) {
-        const userData = await getInformacionUsuarioByEmail(body.email);
-        setUserData(userData);
-        if (userData[0]?.codigo === "ADM") {
-          router.push('/administrador');
-        } else {
-          router.push('/usuario');
-        }
+        redirect: false,
+      });
+      if (response?.error) {
+        setSubmitError("Usuario o contrasena incorrecta");
       } else {
-        setSubmitError('Credenciales incorrectas. Inténtalo de nuevo.');
+        router.push('/');
+        router.refresh();
       }
     } catch (error) {
       setSubmitError('Error en el inicio de sesión. Inténtalo de nuevo.');
@@ -40,22 +48,41 @@ export const Form = () => {
 
   const handleRegister = async (data:any) => {
     try {
-      const body = {
-        email: data.email,
-        nombre: data.nombre,
-        apellido: data.apellido,
-        password: data.password,
-      };
-      const registroExitoso = await signUp(body);
-      if (registroExitoso) {
-        toggleForm();
-      } else {
-        setSubmitError('Error en el registro. Inténtalo de nuevo.');
+      const images = [];
+      const intereses: string[] = [];
+      if (!files || files.length === 0) {
+        setSubmitError("Suba por lo menos una foto");
+      }
+      if (files.length > 5) {
+        setSubmitError(`Solo se permite hasta 5 fotos, se intentaron subir ${files.length}`);
+      }
+      if (files && files.length > 0 && files.length < 6) {
+        for (var file of files) {
+          const resp = await uploadFile(file);
+          images.push(resp?.data?.data?.url);
+        }
+        const body : RegisterReqBody = {
+          email: data.email,
+          nombre: data.nombre,
+          apellido: data.apellido,
+          password: data.password,
+          imagenes: images,
+          intereses: intereses
+        };
+
+        const registroExitoso = await signUp(body);
+        if (registroExitoso) {
+          toggleForm();
+        } else {
+          setSubmitError('Error en el registro. Inténtalo de nuevo.');
+          reset();
+        }
       }
     } catch (error) {
       setSubmitError('Error en el registro. Inténtalo de nuevo.');
+      reset();
     }
-    reset();
+
   };
 
   const toggleForm = () => {
@@ -80,6 +107,10 @@ export const Form = () => {
   };
 
   useEffect(() => {
+    getIntereses()
+        .then((data) => {
+          setIntereses(data.map((interes) => { return {value: interes.interesID, label: interes.nombre}}));
+        })
     const token = localStorage.getItem("accessToken");
     if (token) {
       cargarUsuarioLogueado();
@@ -146,10 +177,34 @@ export const Form = () => {
                     <p>La contraseña debe contener al menos una letra mayúscula, una letra minúscula y un número</p>
                   )}
                 </div>
+                <div>
+                  <Select
+                      multiple
+                      options={intereses}
+                      value={selectValue}
+                      onChange={o => setSelectValue(o)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="file" className="fileLabel">
+                    Upload images
+                    {/* hacer funcionar esto si es posible, que cuando hagas click en la x no se abra el uplodear
+                    <span onClick={() => console.log('jaskd')} className="clear-btn">
+                    &times;
+                  </span>*/}
+                  </label>
+                  <input id="file" type="file" hidden multiple accept=".jpg, .jpeg, .png" {...register('file')}
+                         onChange={onInputChange}/>
+
+                  {files && files.length > 0 && <p className="fileNames">{Array.from(files).map((file, index) => {
+                    return <span key={file.name}>{file.name}{files.length - 1 !== index && ', '} </span>
+                  })}</p>}
+                </div>
+
               </>
-            )}
+              )}
             <div className='containerBtn'>
-              <input className='submit' type="submit" value={isSignUp ? 'Regístrate' : 'Inicia Sesión'} />
+              <input className='submit' type="submit" value={isSignUp ? 'Regístrate' : 'Inicia Sesión'}/>
               {!isSignUp && <button type="button" onClick={toggleForm}>¿No tienes cuenta? Regístrate aquí.</button>}
               {isSignUp && <button type="button" onClick={toggleForm}>¿Ya tienes una cuenta? Inicia sesión aquí.</button>}
               {submitError && <p className="submitError">{submitError}</p>}

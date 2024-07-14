@@ -11,7 +11,6 @@ export const Form = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
@@ -22,7 +21,6 @@ export const Form = () => {
       });
 
       if (response.ok) {
-        console.log('Inicio de sesión exitoso');
         setSubmitError('');
         reset();
       } else {
@@ -34,7 +32,6 @@ export const Form = () => {
   };
 
   const handleSignUp = async (data: any) => {
-    console.log(data);
     try {
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -50,7 +47,6 @@ export const Form = () => {
       });
 
       if (response.ok) {
-        console.log('Registro exitoso');
         setSubmitError('');
         reset();
       } else {

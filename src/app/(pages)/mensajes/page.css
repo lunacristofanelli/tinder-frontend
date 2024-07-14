@@ -1,9 +1,7 @@
-.divContainer {
-    height: 30%;
+main{
+    margin-top: 8rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-
-
